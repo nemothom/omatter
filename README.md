@@ -3,13 +3,15 @@
 Control Matter lights, plugs and sensors from the Omarchy bar and the terminal: on/off,
 brightness, colour, white temperature and scenes.
 
-This PC joins your lights as an **extra controller** (Matter multi-admin). They stay
-in Apple Home, and changes made in either place show up in both.
+Your computer joins your lights as an **extra controller** (Matter multi-admin). They stay
+in your current controller (like Apple Home), and changes made in either place show up in both.
 
 ```
 bar widget ──stdin/stdout──► omatter watch ─┐
 omatter CLI ────────────────────────────────┼─ $XDG_RUNTIME_DIR/omatter.sock ─► omatterd (matter.js) ─► lights
 ```
+
+*Warning : omatter was created through claude for the most part. I needed that tool so I prototyped it, then thought other might look for something like that. Be advised that it may not work for your configuration or create non-wanted vulnerabilities. No warranty here.* 
 
 ## Requirements
 
@@ -33,7 +35,7 @@ mise). The wrappers and the service contain absolute paths to both.
 
 ## Pair a device
 
-1. In the Apple Home app, open the device, then go to **Settings › Turn On Pairing Mode**,
+1. In the your current controller app, open the device, then go to **Settings › Turn On Pairing Mode**,
    and copy the setup code.
 2. In the bar panel, click **+** and enter the code, plus a name and room if you like. Or
    from a terminal:
