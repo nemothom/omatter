@@ -1,0 +1,21 @@
+{
+  "name": "omatter",
+  "version": "0.6.0",
+  "private": true,
+  "type": "module",
+  "description": "Control Matter lights from the Omarchy bar",
+  "scripts": {
+    "test": "node --test test/",
+    "typecheck": "tsc -p .",
+    "check": "tsc -p . && node --test test/"
+  },
+  "dependencies": {
+    "@matter/main": "0.17.9",
+    "@project-chip/matter.js": "0.17.9"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT"
+}

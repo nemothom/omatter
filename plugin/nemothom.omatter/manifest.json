@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "nemothom.omatter",
+  "name": "Omatter",
+  "version": "0.6.0",
+  "author": "nemothom",
+  "license": "MIT",
+  "description": "Control Matter lights (on/off, brightness, colour, temperature, scenes) from the bar via the omatter daemon.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Lights",
+    "description": "Toggle, dim and colour your Matter lights; apply scenes. Middle-click toggles all, scroll dims.",
+    "category": "Home",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

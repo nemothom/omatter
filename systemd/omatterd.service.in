@@ -1,0 +1,14 @@
+[Unit]
+Description=Omatter — Matter light controller
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart="@NODE@" --no-warnings "@ROOT@/src/daemon.ts"
+Environment=NO_COLOR=1
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
