@@ -11,7 +11,7 @@ bar widget ──stdin/stdout──► omatter watch ─┐
 omatter CLI ────────────────────────────────┼─ $XDG_RUNTIME_DIR/omatter.sock ─► omatterd (matter.js) ─► lights
 ```
 
-*Warning : omatter was created through claude for the most part. I needed that tool so I prototyped it, then thought other might look for something like that. Be advised that it may not work for your configuration or create non-wanted vulnerabilities. No warranty here.* 
+*Warning: Omatter was mostly created with Claude. I needed this tool, so I prototyped it, then thought others might be looking for something similar. Be advised that it may not work with your setup, or may introduce unwanted vulnerabilities. No warranty.*
 
 ## Requirements
 
@@ -35,7 +35,7 @@ mise). The wrappers and the service contain absolute paths to both.
 
 ## Pair a device
 
-1. In the your current controller app, open the device, then go to **Settings › Turn On Pairing Mode**,
+1. In your current controller's app (e.g. Apple Home), open the device, then go to **Settings › Turn On Pairing Mode**,
    and copy the setup code.
 2. In the bar panel, click **+** and enter the code, plus a name and room if you like. Or
    from a terminal:
