@@ -4,11 +4,12 @@ import { existsSync, mkdirSync, unlinkSync, watch } from "node:fs";
 import { createServer, type Socket } from "node:net";
 import { dirname } from "node:path";
 import { resolveColor } from "./color.ts";
-import { ICON_STYLES, loadConfig, SOCKET_PATH, updateConfig } from "./config.ts";
+import { DATA_DIR, ICON_STYLES, loadConfig, SOCKET_PATH, updateConfig } from "./config.ts";
 import { connectDaemon, onLines, send, type Request } from "./ipc.ts";
 import { type LightChange, LightManager } from "./matter.ts";
 import { roomList, sortDevices } from "./order.ts";
 import { expandScene, snapshotScene } from "./scenes.ts";
+import { clearStaleLocks, waitForNetwork } from "./startup.ts";
 import { resolveTargets } from "./targets.ts";
 import { OMARCHY_CURRENT, readThemePalette, THEME_SCENE, themePlan } from "./theme.ts";
 
@@ -308,8 +309,11 @@ function watchTheme() {
 
 async function main() {
     mkdirSync(dirname(SOCKET_PATH), { recursive: true });
-    await clearStaleSocket();
+    await clearStaleSocket(); // Exits if another omatterd is serving.
     loadConfig(); // Creates the default config on first run.
+
+    for (const dir of clearStaleLocks(DATA_DIR)) console.log(`Removed stale storage lock in ${dir}`);
+    await waitForNetwork();
 
     await manager.start();
 

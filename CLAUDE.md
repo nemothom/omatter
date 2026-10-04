@@ -35,6 +35,7 @@ omatter CLI ──────────────────────�
 | `src/scenes.ts` | Expands a scene to per-light changes; snapshots current state into a scene |
 | `src/theme.ts` | Built-in `theme` scene: reads the Omarchy palette and assigns it to lights |
 | `src/order.ts` | Room/device ordering from `ui.roomOrder` / `ui.deviceOrder` |
+| `src/startup.ts` | Startup guards: removes stale matter.js storage locks, waits for a real network interface |
 | `plugin/.../Panel.qml` | Bar button and popup: state, `send()`, grouping, every section (hero, icon picker, pairing form, scenes, arrange mode, rooms) |
 | `plugin/.../LightRow.qml` | One light/plug row: switch, slider, swatch, picker, details |
 | `plugin/.../SensorRow.qml`, `ColorPicker.qml`, `DetailsBlock.qml`, `InfoButton.qml`, `ArrangeRow.qml`, `MatterIcon.qml` | The smaller pieces |
@@ -83,6 +84,15 @@ by those ids, and the same `lights` map also holds sensor names and rooms.
   discovery only (no BLE). Only one pairing runs at a time. Errors are rewritten into plain
   language in `explainPairingError`.
 - **`forget`** decommissions only this PC's fabric. Apple Home keeps the device.
+- **Startup after an unclean shutdown:** matter.js keeps `matter.lock` + `matter.pid` in
+  `~/.local/share/omatter/omatter/` and only checks that the PID is alive. After a power cut
+  the PID is often reused by another program, which blocks startup for good. Before starting
+  matter.js, `clearStaleLocks()` removes the lock unless its PID is a running omatterd. This
+  is only safe because `clearStaleSocket()` runs first and exits if another omatterd is
+  serving.
+- **Startup before Wi‑Fi:** user units can't wait for `network-online.target`, so
+  `waitForNetwork()` polls for up to 60 s. Virtual interfaces (Docker, VPNs) don't count.
+  Without it, mDNS fails with `addMembership ENODEV`.
 - **Config is re-read on every access**, so hand edits apply immediately. Always write it
   through `updateConfig`.
 
